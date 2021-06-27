@@ -6,7 +6,7 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">Data Mahasiswa
-                    <a href="mahasiswa-create" class="btn btn-primary btn-md float-right">Tambah Data</a>
+                    <a href="{{ route('mahasiswa-create') }}" class="btn btn-primary btn-md float-right">Tambah Data</a>
                 </div>
 
                 <div class="card-body">
@@ -23,18 +23,19 @@
                                 <TH>AKSI</TH>
                             </tr>
 
+                            @php $no = 1; @endphp
                             @foreach ($mahasiswa as $mhs)
                             <tr>
-                                <td>{{ $mhs->id }}</td>
+                                <td>{{ $no++}}</td>
                                 <td>{{ $mhs->user->name }}</td>
                                 <td>{{ $mhs->npm }}</td>
                                 <td>{{ $mhs->tempat_lahir.', '.$mhs->tgl_lahir }}</td>
                                 <td>{{ $mhs->alamat }}</td>
                                 <td>{{ $mhs->telepon }}</td>
-                                <td>{{ $mhs->gender }}</td>
+                                <td><?php if ($mhs->gender == "P" ) echo 'Perempuan'; elseif ($mhs->gender == "L" ) echo 'Laki-Laki';?></td>
                                 <td>
-                                    <a href="" class="btn btn-sm btn-warning">Edit</a>
-                                    <a href="" class="btn btn-sm btn-danger">Hapus</a>
+                                    <a href="{{ route('mahasiswa-edit', $mhs->id) }}" class="btn btn-sm btn-warning">Edit</a>
+                                    <a href="{{ route('mahasiswa-hapus', $mhs->id) }}" class="btn btn-sm btn-danger">Hapus</a>
                                 </td>
                             </tr>
                             @endforeach

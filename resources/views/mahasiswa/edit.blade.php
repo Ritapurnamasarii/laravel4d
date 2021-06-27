@@ -1,9 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-<?php
-  $jsArray = "var nameAnggota = new Array();\n";
-?>
 
 <div class="container">
     <div class="row justify-content-center">
@@ -12,80 +9,64 @@
                 <div class="card-header">Tambah Data Mahasiswa</div>
 
                 <div class="card-body">
-                    <form method="post" action="{{ route('mahasiswa-simpan') }}" class="form-horizontal">
+                    <form method="post" action="{{ route('mahasiswa-update', $username->id) }}" class="form-horizontal">
                     @csrf
-
                         <div class="form-group">
+                            <!-- <lable for="id" class="col-sm-2 control-lable">ID User</lable> -->
                             <div class="col-sm-12">
-                            <input style="display: none;" type="number" class="form-control" name="id" id="id" placeholder="Langsung Pilih Nama Lengkap" readonly>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-sm-12">
-                            <input style="display: none;" type="number" class="form-control" name="user_id" id="user_id" placeholder="Langsung Pilih Nama Lengkap" readonly>
+                            <input style="display: none;" type="number" class="form-control" name="user_id" id="user_id" value="{{ is_null ($username) ? 'Masukan Kode Makul' : $username->id }}" readonly>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <lable for="nama" class="col-sm-2 control-lable">Nama Lengkap</lable>
-                            
                             <div class="col-sm-12">
-                            <select class="form-control" id="name"  name="name" onchange="changeValue(this.value)">
-                                <option value="selected">Pilih Nama Mahasiswa</option>
-                                @foreach ($username as $usr)
-                                    <option value="{{ $usr->name }}">{{ $usr->name }}</option>
-                                    <?php
-                                        $jsArray .= "nameAnggota['$usr->name'] = {idAnggota:" . addslashes($usr->id) . "};\n";
-                                    ?>
-                                @endforeach
-                                <option value="selected">Jika Nama tidak terdaftar, silahkan register terlebih dahulu</option>
-                            </select>
+                            <input type="text" class="form-control" name="name" placeholder="Masukan Nama..." value="{{ is_null ($username) ? 'Masukan Nama Lengkap' : $username->name }}" required>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <lable for="npm" class="col-sm-2 control-lable">NPM</lable>
                             <div class="col-sm-12">
-                            <input type="text" class="form-control" name="npm" placeholder="Masukan NPM..." required>
+                            <input type="text" class="form-control" name="npm" value="{{ is_null ($mahasiswa) ? 'Masukan NPM' : $mahasiswa->npm }}" required>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <lable for="tempat_lahir" class="col-sm-2 control-lable">Tempat Lahir</lable>
                             <div class="col-sm-12">
-                            <input type="text" class="form-control" name="tempat_lahir" placeholder="Masukan Tempat lahir..." required>
+                            <input type="text" class="form-control" name="tempat_lahir" value="{{ is_null ($mahasiswa) ? 'Masukan Temapat Lahir' : $mahasiswa->tempat_lahir }}" required>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <lable for="tanggal_lahir" class="col-sm-2 control-lable">Tanggal Lahir</lable>
                             <div class="col-sm-12">
-                            <input type="date" class="form-control" name="tgl_lahir" placeholder="Masukan Tanggal Lahir..." required>
+                            <input type="date" class="form-control" name="tgl_lahir" value="{{ is_null ($mahasiswa) ? 'Masukan Tanggal Lahir' : $mahasiswa->tgl_lahir }}" required>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <lable for="alamat" class="col-sm-2 control-lable">Alamat</lable>
                             <div class="col-sm-12">
-                            <input type="text" class="form-control" name="alamat" placeholder="Masukan Alamat..." required>
+                            <input type="text" class="form-control" name="alamat" value="{{ is_null ($mahasiswa) ? 'Masukan Alamat' : $mahasiswa->alamat }}" required>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <lable for="telepon" class="col-sm-2 control-lable">Telpon</lable>
                             <div class="col-sm-12">
-                            <input type="text" class="form-control" name="telepon" placeholder="Masukan Telpon..." required>
+                            <input type="text" class="form-control" name="telepon" value="{{ is_null ($mahasiswa) ? 'Masukan No Telepon' : $mahasiswa->telepon }}" required>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label for="" class="col-sm-2 control-lable">Gender</label>
                             <div class="col-sm-12">
-                                <select class="custom-select" id="gender" name="gender" required>
+                                <select class="custom-select" id="gender" name="gender">
                                     <option selected disabled value="">Pilih Gender...</option>
-                                    <option value="L">Laki-Laki</option>
-                                    <option value="P">Perempuan</option>
+                                    <option <?php if ($mahasiswa->gender == "L" ) echo 'selected';?>  value="L" selected>Laki-Laki</option>
+                                    <option <?php if ($mahasiswa->gender == "P" ) echo 'selected';?>  value="P">Perempuan</option>
                                 </select>
                             </div>
                         </div>
@@ -93,7 +74,7 @@
                         <div class="form-group">
                             <div class="col-sm-offset-2 col-sm-12">
                             <input type="submit" name="Submit" class="btn btn-primary" value="Simpan">
-                            <input type="reset" name="reset" class="btn btn-warning" value="Reset">
+                            <a href="{{ route('mahasiswa') }}" class="btn btn-warning">Batal</a>
                             </div>
                         </div>
                     </form>
@@ -102,11 +83,4 @@
         </div>
     </div>
 </div>
-<script type="text/javascript">
-    <?php echo $jsArray; ?>
-    function changeValue(id){
-    document.getElementById("user_id").value = nameAnggota[id].idAnggota;
-    document.getElementById("id").value = nameAnggota[id].idAnggota;
-    };
-</script>
 @endsection
