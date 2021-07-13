@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Mahasiswa;
-use App\UserMhs;
+use App\User;
 use Illuminate\Http\Request;
 
 class MahasiswaController extends Controller
@@ -18,7 +18,7 @@ class MahasiswaController extends Controller
 
     public function create()
     {
-        $username = UserMhs::all();
+        $username = User::all();
         return view('mahasiswa.create', compact('username'));
     }
 
@@ -33,18 +33,18 @@ class MahasiswaController extends Controller
     // dd($id);
     // dd($makul);
     {
-        $username = UserMhs::find($id);
+        $username = User::find($id);
         $mahasiswa = Mahasiswa::find($id); //select * from nama_table where id= $id;
         return view('mahasiswa.edit', compact('mahasiswa','username'));
     }
 
     public function update(Request $request, $id)
     {
-        $username = UserMhs::find($id); //select * from nama_table where id= $id;
+        $username = User::find($id); //select * from nama_table where id= $id;
         $username->update($request->all());
         $mahasiswa = Mahasiswa::find($id); //select * from nama_table where id= $id;
         $mahasiswa->update($request->all());
-        toast('Dara Mahasiswa Berhasil Diedit','success');
+        toast('Data Mahasiswa Berhasil Diedit','success');
         return redirect()->route('mahasiswa'); 
     }
 
@@ -52,7 +52,7 @@ class MahasiswaController extends Controller
     {
         $mahasiswa = Mahasiswa::find($id); //select * from nama_table where id= $id;
         $mahasiswa->delete();
-        $user = UserMhs::find($id); //select * from nama_table where id= $id;
+        $user = User::find($id); //select * from nama_table where id= $id;
         $user->delete();
         alert()->warning('Sukses','Data Mahasiswa Berhasil DiHapus');
         return redirect()->route('mahasiswa'); 

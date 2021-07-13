@@ -40,3 +40,15 @@ Route::get('makul-edit/{id}', 'MakulController@edit')->name('makul-edit');
 Route::post('makul-update/{id}', 'MakulController@update')->name('makul-update');
 //hapus
 Route::get('makul-hapus/{id}', 'MakulController@destroy')->name('makul-hapus');
+
+
+//nilai
+Route::get('nilai', 'NilaiController@index')->name('nilai');
+//create
+Route::get('nilai-create', 'NilaiController@create')->name('nilai-create');
+Route::post('nilai-simpan', 'NilaiController@store')->name('nilai-simpan');
+//edit
+Route::get('nilai-edit/{id}', 'NilaiController@edit')->name('nilai-edit');
+Route::post('nilai-update/{id}', 'NilaiController@update')->name('nilai-update');
+//hapus
+Route::get('nilai-hapus/{id}', 'NilaiController@destroy')->name('nilai-hapus');

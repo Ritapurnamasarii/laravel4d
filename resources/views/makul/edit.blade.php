@@ -21,7 +21,7 @@
                                     <input type="text" name="nama_makul" class="form-control" value="{{ is_null ($makul) ? 'Masukan Nama Makul' : $makul->nama_makul }}">
                                 </div>
                                 <div class="col">
-                                    <label for="">SKSl</label>
+                                    <label for="">SKS</label>
                                     <input type="number" name="sks" class="form-control" value="{{ is_null ($makul) ? 'Masukan SKS' : $makul->sks }}">
                                 </div>
                             </div>
@@ -30,7 +30,7 @@
                             <div class="form-row float-right">
                                 <div class="col">
                                     <button type="submit" class="btn btn-primary btn-md">Simpan</button>
-                                    <a href="{{ route('makul') }}" class="btn btn-danger btn-md">Batal</a>
+                                    <a href="{{ route('nilai') }}" class="btn btn-danger btn-md">Batal</a>
                                 </div>
                             </div>
                         </div>

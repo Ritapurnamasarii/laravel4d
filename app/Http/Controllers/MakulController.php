@@ -37,7 +37,7 @@ class MakulController extends Controller
     {
         $makul = Makul::find($id); //select * from nama_table where id= $id;
         $makul->update($request->all());
-        toast('Dara Berhasl Diedit','success');
+        toast('Data Berhasl Diedit','success');
         return redirect()->route('makul'); 
     }
 
